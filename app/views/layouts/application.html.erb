@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TestApplication</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Test Application</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    <%if can? :create, User %>
+      <li class="nav-item active">
+        <a class="nav-link" href="/all_secret_code">Secret Codes <span class="sr-only">(current)</span></a>
+      </li>
+    <%else%>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">SecretCodes</a>
+      </li>
+    <%end%>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+        <% if user_signed_in? %>
+	     	<div><%=current_user.email%></div>
+        <%= link_to "Log out", destroy_user_session_path, method: :delete, :class =>'btn btn-outline-danger' %>
+    	<% else %>
+    		<%= link_to "Log in", new_user_session_path, :class => 'btn btn-outline-primary mr-2'%>	   
+
+    		<%= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-outline-success' %>
+		<% end %>
+    </form>
+  </div>
+</nav>
+  	<div class="container">
+  	<% if notice %> <div class="alert alert-info"><%= notice%></div><%end%>
+  	<% if alert %> <div class="alert alert-warning"><%= alert%></div><%end%>
+  	    <%= yield %>
+  	</div>
+  </body>
+</html>

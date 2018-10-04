@@ -1,0 +1,34 @@
+<div class="container">
+  <h2>Secret Codes</h2>
+  <p>Secret Code with Users</p>
+
+<% if can? :create, SecretCode %>
+  <button type="button" class="btn btn-info btn-sm" style="float: right" data-toggle="modal" data-target="#generate_code">Generate Secret Codes</button>
+<%end%>
+
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sr.no</th>
+        <th>Secret Code</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+          <% @codes.each_with_index do |code,index| %>
+        <tr>
+              <td><%=index+1%></td>
+              <td><%=code['code']%></td>
+              <td><%=code.user['first_name']%></td>
+              <td><%=code.user['last_name']%></td>
+              <td><%=code.user['email']%></td>
+        </tr>
+          <% end %>
+        
+    </tbody>
+  </table>
+</div>
+
+<%= render 'new_secret_code' %>

@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Secret Codes</h2>
+  <p>Secret Code with Users</p>
+<label><a data-toggle="modal" data-target="#addkeymodal"  class="btn btn-xs red"><i class="fa fa-plus"></i>Generate Secret Codes </a></label>  <table class="table table-striped">
+  
+    <thead>
+      <tr>
+        <th>Sr.no</th>
+        <th>Secret Code</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+           <% @codes.each_with_index do |code,index| %>
+        <tr>
+              <td><%=index+1%></td>
+              <td><%=code['code']%></td>
+              <td><%=code.user['first_name'] if code.user%></td>
+              <td><%=code.user['last_name'] if code.user%></td>
+              <td><%=code.user['email'] if code.user%></td>
+              <td>
+                <% unless code.is_used %>
+                    <%= link_to 'Delete', 
+                         destroy_secret_code_path(code), 
+                         method: :delete, 
+                         data: { confirm: 'Are you sure?' } %> 
+                                    <%end%>
+              </td>
+        </tr>
+          <% end %>
+        
+    </tbody>
+  </table>
+</div>
+
+<%= render 'new_secret_code' %>
